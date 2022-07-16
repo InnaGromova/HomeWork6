@@ -24,7 +24,7 @@ public class Test1 {
     SelenideElement name = $("#name");
     SelenideElement middle = $("#middle");
     SelenideElement getSignature =  $("#GetSignature");
-    SelenideElement signature_1 =  $("#Signature_1");
+    SelenideElement signature =  $("#Signature_1");
     SelenideElement search =  $("#title-search-input");
     SelenideElement searchbutton = $("input[type='submit']");
 
@@ -39,7 +39,7 @@ public class Test1 {
         name.setValue(argumentsAccessor.getString(1));
         middle.setValue(argumentsAccessor.getString(2));
         getSignature.click();
-        signature_1.shouldBe(visible);
+        signature.shouldBe(visible);
     }
     static Stream<Arguments> testSearch() {
         return Stream.of(
