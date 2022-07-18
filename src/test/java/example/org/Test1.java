@@ -34,7 +34,7 @@ public class Test1 {
             "Gromova,Inna,Sergeevna",
             "Gromova,Inna,"
     })
-    void fullnameTest(ArgumentsAccessor argumentsAccessor) {
+    void fullnameTest1(ArgumentsAccessor argumentsAccessor) {
         Selenide.open("https://podpis-online.ru/");
         surname.setValue(argumentsAccessor.getString(0));
         name.setValue(argumentsAccessor.getString(1));
