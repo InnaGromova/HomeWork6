@@ -8,6 +8,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class Test1 {
             "Gromova,Inna,Sergeevna",
             "Gromova,Inna,"
     })
-    void Test12(ArgumentsAccessor argumentsAccessor) {
+    void fullnameTest(ArgumentsAccessor argumentsAccessor) {
         Selenide.open("https://podpis-online.ru/");
         surname.setValue(argumentsAccessor.getString(0));
         name.setValue(argumentsAccessor.getString(1));
@@ -41,18 +42,29 @@ public class Test1 {
         getSignature.click();
         signature.shouldBe(visible);
     }
-    static Stream<Arguments> testSearch() {
+    static Stream<Arguments> bleachnarutoSearch() {
         return Stream.of(
                 Arguments.of("naruto", asList("Hatake Kakashi Anbu Black","Namikaze Minato")),
                 Arguments.of("bleach", asList("Hitsugaya Toushirou","Kurosaki Ichigo"))
         );
     }
-    @MethodSource(value = "testSearch")
+    @MethodSource(value = "bleachnarutoSearch")
     @ParameterizedTest(name = "При поиске в аниме-магазине {0} в результатах отображается {1}")
-    void testSearch(String searchData, List<String> expectedResult){
+    void bleachnarutoSearch(String searchData, List<String> expectedResult){
         Selenide.open("https://nodanoshi.net/catalog/32-figurki_anime/");
         search.setValue(searchData);
         searchbutton.click();
         $$("#content").find(text(String.valueOf(CollectionCondition.texts(expectedResult))));
     }
+    @ValueSource(strings = {"Kimi no na wa", "Tenki no ko", "Sen to Chihiro no Kamikakushi"})
+    @ParameterizedTest(name = "При поиске в аниме-магазине {0} в результатах отображается {0}")
+    void animeSearch(String setanime){
+        Selenide.open("https://nodanoshi.net/catalog/32-figurki_anime/");
+        search.setValue(setanime);
+        searchbutton.click();
+        $$("#content").find(text(String.valueOf(CollectionCondition.texts(setanime))));
+    }
+
 }
+
+
